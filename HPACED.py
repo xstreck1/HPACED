@@ -1,6 +1,8 @@
 # Highest Peak Aligment for Capilary Electrophoresis Data
-# Dr. Adam Streck 2016
-# adam.streck@gmail.com
+# Copyright (c) Dr. Adam Streck 2016
+# Distribute under the MIT License
+#
+# mail: adam.streck@gmail.com
 
 import os
 import argparse
