@@ -1,5 +1,5 @@
 # Highest Peak Aligment for Capilary Electrophoresis Data
-# (c) Dr. Adam Streck 2016
+# Dr. Adam Streck 2016
 # adam.streck@gmail.com
 
 import os
@@ -20,7 +20,10 @@ def read_data(datafile):
 
 def write_data(datafile, data):
     for line in data:
-        datafile.write(str(line[0]) + " " + str(line[1]) + "\n")
+        if line[0] < 0:
+            continue
+        else:
+            datafile.write(str(line[0]) + "\t" + str(line[1]) + "\n")
 
 
 def find_highest_peak(data, delay):
@@ -38,12 +41,14 @@ def shift_time_by(data, shift):
         line[0] += shift
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+                                     description="Used to align the timeline of datafiles "
+                                                 "based on the highest peak found after a certain timepoint.")
     parser.add_argument("template", help="the name of the file found in the location based on which the files are aligned")
     parser.add_argument("--timepoint", type=float, default=0.0, help="ignores the data up till the timepoint (inclusive)")
     parser.add_argument("--location", default=".", help="a path in the filesystem to where the data are stores")
     parser.add_argument("--output", default="./HPACED_OUT", help="a path relative to the location where the results are to be stored")
-    parser.add_argument("--extension", help="if set, only the files with the extension are considered, if not, all files found in the location are tested")
+    parser.add_argument("--extension", help="if set, only the files with the extension (e.g. .xy) are considered, if not, all files found in the location are tested")
 
     args = parser.parse_args()
 
